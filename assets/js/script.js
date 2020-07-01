@@ -1,82 +1,104 @@
-var specialChar = ['!', '@', '#', '$', '%', '&'];
-var generateButton = document.getElementById('generateBtn');
-if(generateButton){
-  generateButton.addEventListener('click', writePassword);
-}
+
+const specialCharacters = "!@#$%^&*()";
+const generateButton = document.getElementById('generateBtn')
+generateButton.addEventListener('click', writePassword)
+
 
 function writePassword() {
   var password = generatePassword();
-  var passwordText = document.querySelector('#password');
+  var passwordText = document.querySelector("#password");
+
   passwordText.value = password;
+
 }
 
-function generatePassword () {
-  var passwordLength = prompt("How many characters would you like? ('choose between 8-128')");
-  var lowerCase = confirm("Lowercases included?");
-  var upperCase = confirm("Uppercases included?");
-  var number = confirm("numbers included?");
-  var specialChar = confirm("special Characters included?");
 
-  var minCount = 0;
+function generatePassword() {
+  var passwordLength = prompt("How many characters do you want your password to be? Choose between 8-128");
 
-  var minNumber = "";
-  var minLowerCase = "";
-  var minUpperCase = "";
-  var minSpecialChar = "";
+  var numbers = confirm("Do you want numbers included?");
 
-  
+  var lowerCases = confirm("Do you want lowercases included?");
+
+  var upperCases = confirm("Do you want uppercases included?");
+
+  var special = confirm("Do you want special characters included?");
+
+ 
+  var minimumCount = 0;
+
+
+
+
+  var minimumNumbers = "";
+  var minimumLowerCases = "";
+  var minimumUpperCases = "";
+  var minimumSpecialCharacters = "";
+
+
+
   var functionArray = {
-    getNumber: function() {
+    getNumbers: function() {
       return String.fromCharCode(Math.floor(Math.random() * 10 + 48));
     },
-    getLowerCase: function() {
-      return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
 
+    getLowerCases: function() {
+      return String.fromCharCode(Math.floor(Math.random() * 26 + 97));
     },
-    getUpperCase: function() {
-      return String.fromCharCode(Math.floor(Math.random() * 26) + 65); 
+
+    getUpperCases: function() {
+      return String.fromCharCode(Math.floor(Math.random() * 26 + 65));
     },
-    getSpecialChar: function() {
-      return String.fromCharCode(Math.floor(Math.random() * specialChar.length));
-    }   
-  };
 
-  if (lowerCase === true) {
-    minLowerCase = functionArray.getLowerCase();
-    minCount++;
+    getSpecialCharacters: function() {
+      return specialCharacters[Math.floor(Math.random() * specialCharacters.length)]
+    }
+
+};
+
+ 
+
+  if (numbers === true) {
+    minimumNumbers = functionArray.getNumbers();
+    minimumCount++;
+
   }
-  if (upperCase === true) {
-    minUpperCase = functionArray.getUpperCase();
-    minCount++;
+
+  if (lowerCases === true) {
+    minimumLowerCases = functionArray.getLowerCases();
+    minimumCount++;
+
   }
-  if (number === true) {
-    minNumber = functionArray.getNumber();
-    minCount++;
+
+  if (upperCases === true) {
+    minimumUpperCases = functionArray.getUpperCases();
+    minimumCount++;
+
   }
-  if (specialChar === true) {
-    minSpecialChar = functionArray.getSpecialChar();
-    minCount++;
+
+  if (special === true) {
+    minimumSpecialCharacters = functionArray.getSpecialCharacters();
+    minimumCount++;
+
   }
-  
-   var randomPasswordGenerated = "";
 
 
-   for (let i = 0; i < (parseInt(passwordLength) - minCount); i++) {
-     var randomNumberChosen = Math.floor(Math.random() * 10);
- 
-     randomPasswordGenerated += randomNumberChosen;
- 
-   }
- 
-   randomPasswordGenerated += minNumber;
-   randomPasswordGenerated += minLowerCase;
-   randomPasswordGenerated += minUpperCase;
-   randomPasswordGenerated += minSpecialChar;
- 
- 
-   return randomPasswordGenerated;
-   
- }
+  var randomPasswordGenerated = "";
 
-writePassword();
 
+  for (let i = 0; i < (parseInt(passwordLength) - minimumCount); i++) {
+    var randomNumberPicked = Math.floor(Math.random() * 8);
+
+    randomPasswordGenerated += randomNumberPicked;
+
+  }
+
+  randomPasswordGenerated += minimumNumbers;
+  randomPasswordGenerated += minimumLowerCases;
+  randomPasswordGenerated += minimumUpperCases;
+  randomPasswordGenerated += minimumSpecialCharacters;
+
+
+  return randomPasswordGenerated;
+
+}
